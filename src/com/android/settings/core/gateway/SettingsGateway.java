@@ -110,6 +110,7 @@ import com.android.settings.fuelgauge.AdvancedPowerUsageDetail;
 import com.android.settings.fuelgauge.batterysaver.BatterySaverScheduleSettings;
 import com.android.settings.fuelgauge.batterysaver.BatterySaverSettings;
 import com.android.settings.fuelgauge.batteryusage.PowerUsageSummary;
+import com.android.settings.fuelgauge.sleepmode.SleepMode;
 import com.android.settings.gestures.AssistGestureSettings;
 import com.android.settings.gestures.ButtonNavigationSettingsFragment;
 import com.android.settings.gestures.DoubleTapPowerSettings;
@@ -396,7 +397,8 @@ public class SettingsGateway {
             WifiTetherClientManager.class.getName(),
             LockScreen.class.getName(),
             UserInterface.class.getName(),
-            QuickSettings.class.getName()
+            QuickSettings.class.getName(),
+            SleepMode.class.getName()
 
     };
 
@@ -451,6 +453,7 @@ public class SettingsGateway {
             Settings.WallpaperSettingsActivity.class.getName(),
             Settings.PersonalizationsLockscreenActivity.class.getName(),
             Settings.PersonalizationsToolboxActivity.class.getName(),
-            Settings.PersonalizationsThemesActivity.class.getName()
+            Settings.PersonalizationsThemesActivity.class.getName(),
+            Settings.SleepModeActivity.class.getName()
     };
 }
