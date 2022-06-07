@@ -39,4 +39,16 @@
     <string name="double_tap_title">Double tap</string>
     <string name="doze_double_tap_title">Double tap to check phone</string>
     <string name="doze_double_tap_summary">Pulse notifications by a double tap</string>
+
+    <string name="summary_account">Saved passwords, auto fill, sinced accounts</string>
+    <string name="summary_conect">Sim status, data saver, DNS, and VPN</string>
+    <string name="summary_hspt">Share internet to other device</string>
+    <string name="title_hspt">Portable hotspot</string>
+    <string name="title_conectivity">Connectivity</string>
+
+    <!-- Navigation bar IME space -->
+    <string name="navigation_bar_ime_space_title">IME space</string>
+    <string name="ime_narrow">Narrow</string>
+    <string name="ime_default">Default</string>
+    <string name="ime_hidden">Hidden</string>
 </resources>
