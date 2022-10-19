@@ -77,14 +77,9 @@ public class GesturesSettingPreferenceController extends BasePreferenceControlle
         controllers.add(new DoubleTapScreenPreferenceController(context, FAKE_PREF_KEY)
                 .setConfig(ambientDisplayConfiguration));
         controllers.add(new PreventRingingParentPreferenceController(context, FAKE_PREF_KEY));
-<<<<<<< HEAD
         controllers.add(new ScreenOffUdfpsPreferenceController(context, FAKE_PREF_KEY)
                 .setConfig(ambientDisplayConfiguration));
-=======
-        controllers.add(new SwipeToScreenshotPreferenceController(context, FAKE_PREF_KEY));
-        controllers.add(new PowerButtonTorchGesturePreferenceController(context, FAKE_PREF_KEY));
         controllers.add(new DoubleTapAmbientPreferenceController(context, FAKE_PREF_KEY));
->>>>>>> 31c2918de7 (Settings: Double tap to trigger doze [2/2])
         return controllers;
     }
 }
