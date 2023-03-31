@@ -312,6 +312,7 @@ public class MobileNetworkSettings extends AbstractMobileNetworkSettings impleme
             controller.init(mSubId);
         }
         use(Smart5gPreferenceController.class).init(mSubId);
+        use(ForceLteCaPreferenceController.class).init(mSubId);
     }
 
     @Override
