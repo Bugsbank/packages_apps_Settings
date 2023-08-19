@@ -62,7 +62,7 @@
         android:order="-135"/>
         
     <com.android.settings.widget.HomepagePreference
-        android:fragment="com.crdroid.settings.personalizationSettingsLayout"
+        android:fragment="com.crdroid.settings.crDroidSettingsLayout"
         android:icon="@drawable/op_ic_homepage_personalizations"
         android:key="top_level_crdroid"
         android:order="-130"

@@ -815,7 +815,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">@dimen/homepage_title_margin_bottom</item>
         <item name="android:layout_marginHorizontal">@dimen/homepage_title_margin_horizontal</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">29sp</item>
+        <item name="android:textColor">@android:color/system_accent1_400</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -824,7 +825,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">@dimen/homepage_title_margin_bottom</item>
         <item name="android:layout_marginHorizontal">@dimen/homepage_title_margin_horizontal</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">21sp</item>
         <item name="android:fontWeight">500</item>
     </style>
 
