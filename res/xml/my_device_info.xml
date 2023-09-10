@@ -78,7 +78,7 @@
         android:selectable="true" >
             <intent
                android:action="android.intent.action.VIEW"
-               android:data="https://www.youtube.com/watch?v=POe9SOEKotk" />
+	       android:data="https://youtu.be/FvOpPeKSf_4?si=hqwelFPeGuRbc8dy" />
       </Preference>
 
     <!-- Security patch -->
