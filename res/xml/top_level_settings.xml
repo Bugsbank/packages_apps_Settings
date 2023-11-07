@@ -43,11 +43,11 @@
         
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.crdroid.settings.crDroidSettingsLayout"
-        android:icon="@drawable/ic_settings_customizations"
+        android:icon="@drawable/ic_ghost"
         android:key="top_level_crdroid"
         android:order="-145"
-        android:title="@string/crdroid_settings_title"
-        android:summary="@string/crdroid_settings_summary"
+        android:title="@string/ghost_settings_title"
+        android:summary="@string/ghost_settings_summary"
         settings:controller="com.crdroid.settings.TopLevelSettingsPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
@@ -87,26 +87,6 @@
         android:title="@string/configure_notification_settings"
         android:summary="@string/notification_dashboard_summary"
         settings:highlightableMenuKey="@string/menu_key_notifications"/>
-
-    <com.android.settings.widget.HomepagePreference
-        android:fragment="com.android.settings.fuelgauge.batteryusage.PowerUsageSummary"
-        android:icon="@drawable/ic_settings_battery_white"
-        android:key="top_level_battery"
-        android:order="-110"
-        android:title="@string/power_usage_summary_title"
-        android:summary="@string/summary_placeholder"
-        settings:highlightableMenuKey="@string/menu_key_battery"
-        settings:controller="com.android.settings.fuelgauge.TopLevelBatteryPreferenceController"/>
-
-    <com.android.settings.widget.HomepagePreference
-        android:fragment="com.android.settings.deviceinfo.StorageDashboardFragment"
-        android:icon="@drawable/ic_storage_white"
-        android:key="top_level_storage"
-        android:order="-100"
-        android:title="@string/storage_settings"
-        android:summary="@string/summary_placeholder"
-        settings:highlightableMenuKey="@string/menu_key_storage"
-        settings:controller="com.android.settings.deviceinfo.TopLevelStoragePreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.notification.SoundSettings"
@@ -205,10 +185,6 @@
         settings:highlightableMenuKey="@string/menu_key_accounts"
         settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> c892f9f45b (Settings: Import RisingUI-2.0 for Setting's homeapge & About phone)
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.system.SystemDashboardFragment"
         android:icon="@drawable/ic_settings_system_dashboard_white"

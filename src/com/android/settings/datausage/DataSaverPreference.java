@@ -20,7 +20,6 @@ import android.util.AttributeSet;
 import androidx.preference.Preference;
 
 import com.android.settings.R;
-import com.android.settings.preferences.ui.AdaptivePreferenceUtils;
 
 public class DataSaverPreference extends Preference implements DataSaverBackend.Listener {
 
@@ -28,12 +27,10 @@ public class DataSaverPreference extends Preference implements DataSaverBackend.
 
     public DataSaverPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
         mDataSaverBackend = new DataSaverBackend(context);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        setLayoutResource(AdaptivePreferenceUtils.getLayoutResourceId(context, attrs));
     }
 
     @Override

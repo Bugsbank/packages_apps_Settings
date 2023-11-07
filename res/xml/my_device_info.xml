@@ -23,12 +23,12 @@
 
     <PreferenceCategory
         android:selectable="false"
-        android:title="@string/device_header_info_category_title">
-
+        android:title="Device Banner">
+     
         <com.android.settingslib.widget.LayoutPreference
-            android:key="my_device_info_header"
-            android:order="-999"
-            android:layout="@layout/about_device_info"
+            android:key="my_device_hw_header"
+            android:order="-998"
+            android:layout="@layout/about_device_info_hw"
             android:selectable="false"
             settings:isPreferenceVisible="true"/>
 
@@ -36,12 +36,12 @@
     
     <PreferenceCategory
         android:selectable="false"
-        android:title="@string/device_info_hw_sw_more">
+        android:title="@string/device_header_info_category_title">
 
         <com.android.settingslib.widget.LayoutPreference
-            android:key="my_device_hw_header"
-            android:order="-998"
-            android:layout="@layout/about_device_info_hw"
+            android:key="my_device_info_header"
+            android:order="-999"
+            android:layout="@layout/about_device_info"
             android:selectable="false"
             settings:isPreferenceVisible="true"/>
             
@@ -168,7 +168,7 @@
         <com.android.settings.preferences.ui.AdaptivePreference
             android:key="lineage_os_version"
             android:order="43"
-            android:title="@*lineageos.platform:string/lineage_version"
+            android:title="GhostOS version"
             android:summary="@string/summary_placeholder"
             android:icon="@drawable/ic_ghost"
             settings:position="bottom"

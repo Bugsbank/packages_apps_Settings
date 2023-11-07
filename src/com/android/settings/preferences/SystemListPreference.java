@@ -23,7 +23,7 @@ import android.provider.Settings;
 import android.util.AttributeSet;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import com.android.internal.util.crdroid.systemUtils;
+import com.android.internal.util.crdroid.Utils;
 import com.android.settings.R;
 import java.util.Arrays;
 
@@ -90,13 +90,13 @@ public class SystemListPreference extends ListPreference {
                 }
                 switch (restartKey) {
                     case SYSTEM:
-                        systemUtils.showSystemRestartDialog(context);
+                        Utils.showSystemRestartDialog(context);
                         break;
                     case SYSTEMUI_RESTART:
-                        systemUtils.showSystemUIRestartDialog(context);
+                        Utils.showSystemUIRestartDialog(context);
                         break;
                     case SETTINGS_RESTART:
-                        systemUtils.showSettingsRestartDialog(context);
+                        Utils.showSettingsRestartDialog(context);
                         break;
                     case NONE:
                     default:

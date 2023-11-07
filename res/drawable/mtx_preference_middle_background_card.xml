@@ -11,7 +11,7 @@
      limitations under the License.
 -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-        android:color="?android:attr/colorControlHighlight">
+        android:color="@android:color/system_accent1_300">
     <item android:id="@android:id/mask">
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
             <solid android:color="#FFFFFFFF"/>
@@ -20,10 +20,8 @@
         </shape>
     </item>
     <item android:id="@android:id/background">
-        <shape xmlns:android="http://schemas.android.com/apk/res/android"
-            android:shape="rectangle">
-
-            <solid android:color="@color/user_crd_bg" />
+        <shape android:shape="rectangle" android:tint="@color/user_crd_bg">
+            <solid android:color="#45C9C9C9"/>
             <corners android:bottomRightRadius="0dp" android:bottomLeftRadius="0dp" 
                 android:topLeftRadius="0dp" android:topRightRadius="0dp"/> 
         </shape>

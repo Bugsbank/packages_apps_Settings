@@ -55,8 +55,6 @@ import com.android.settingslib.HelpUtils;
 import com.android.settingslib.RestrictedLockUtils;
 import com.android.settingslib.RestrictedLockUtilsInternal;
 
-import com.android.settings.preferences.ui.AdaptivePreferenceUtils;
-
 import com.google.common.net.InternetDomainName;
 
 import java.util.HashMap;
@@ -115,7 +113,6 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
 
     public PrivateDnsModeDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setLayoutResource(AdaptivePreferenceUtils.getLayoutResourceId(context, attrs));
     }
 
     public PrivateDnsModeDialogPreference(Context context, AttributeSet attrs, int defStyleAttr) {

@@ -29,7 +29,7 @@ import androidx.core.content.res.TypedArrayUtils;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
-import com.android.internal.util.crdroid.systemUtils;
+import com.android.internal.util.crdroid.Utils;
 import com.android.settings.R;
 
 import com.android.settings.widget.SeekBarPreference;
@@ -111,13 +111,13 @@ public class SystemSeekBarPreference extends SeekBarPreference {
                 }
                 switch (restartKey) {
                     case SYSTEM:
-                        systemUtils.showSystemRestartDialog(mContext);
+                        Utils.showSystemRestartDialog(mContext);
                         break;
                     case SYSTEMUI_RESTART:
-                        systemUtils.showSystemUIRestartDialog(mContext);
+                        Utils.showSystemUIRestartDialog(mContext);
                         break;
                     case SETTINGS_RESTART:
-                        systemUtils.showSettingsRestartDialog(mContext);
+                        Utils.showSettingsRestartDialog(mContext);
                         break;
                     case NONE:
                     default:

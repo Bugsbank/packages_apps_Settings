@@ -32,7 +32,7 @@
         android:layout_marginBottom="20dp"
         app:cardCornerRadius="32dp"
         app:cardBackgroundColor="@android:color/transparent"
-        app:strokeColor="@color/op_control_text_color_primary"
+        app:strokeColor="@color/mtx_text_color_primary"
         app:strokeWidth="4dp">
 
         <ImageView
@@ -46,7 +46,7 @@
     <TextView
         android:id="@+id/homepage_title"
         android:textColor="@android:color/system_accent1_400"
-        style="@style/op_control_text_style_h6"
+        style="@style/mtx_text_style_h6"
         android:layout_marginBottom="9dp"
         android:textSize="26sp"
         android:layout_width="wrap_content"
@@ -54,8 +54,8 @@
 
     <TextView
         android:id="@+id/homepage_greetings"
-        style="@style/op_control_text_style_body1"
-        android:textColor="@color/op_control_text_color_primary"
+        style="@style/mtx_text_style_body1"
+        android:textColor="@color/mtx_text_color_primary"
         android:textSize="18sp"
         android:layout_marginBottom="12dp"
         android:layout_width="wrap_content"
