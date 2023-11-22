@@ -26,14 +26,11 @@ import android.animation.LayoutTransition;
 import android.app.ActivityManager;
 import android.app.settings.SettingsEnums;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.ApplicationInfoFlags;
 import android.content.pm.UserInfo;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -59,24 +56,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
-import android.content.Context;
-import android.os.UserHandle;
-import android.os.UserManager;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.window.embedding.SplitRule;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import com.android.internal.util.UserIcons;
-
-import com.android.internal.util.UserIcons;
 
 import com.android.settings.R;
 import android.provider.Settings;
 import com.android.settings.SettingsActivity;
 import com.android.settings.SettingsApplication;
+import com.android.settings.accounts.AvatarViewMixin;
 import com.android.settings.activityembedding.ActivityEmbeddingRulesController;
 import com.android.settings.activityembedding.ActivityEmbeddingUtils;
 import com.android.settings.core.CategoryMixin;
@@ -86,7 +76,6 @@ import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.safetycenter.SafetyCenterManagerWrapper;
 import com.android.settingslib.Utils;
 import com.android.settingslib.core.lifecycle.HideNonSystemOverlayMixin;
-import com.android.settingslib.drawable.CircleFramedDrawable;
 
 import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.android.settingslib.drawable.CircleFramedDrawable;
@@ -98,8 +87,6 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.Set;
-
-import com.android.settingslib.drawable.CircleFramedDrawable;
 
 /** Settings homepage activity */
 public class SettingsHomepageActivity extends FragmentActivity implements
@@ -193,10 +180,6 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         return mCategoryMixin;
     }
 
-    Context context;
-    ImageView avatarView;
-    UserManager mUserManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,10 +217,6 @@ public class SettingsHomepageActivity extends FragmentActivity implements
 
         updateAppBarMinHeight();
         initHomepageContainer();
-
-        Context context = getApplicationContext();
-        mUserManager = context.getSystemService(UserManager.class);
-
         updateHomepageAppBar();
         updateHomepageBackground();
         mLoadedListeners = new ArraySet<>();
@@ -293,19 +272,6 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         }
         // Homepage redesign end
 
-        avatarView = findViewById(R.id.account_avatar);
-        //final AvatarViewMixin avatarViewMixin = new AvatarViewMixin(this, avatarView);
-        avatarView.setImageDrawable(getCircularUserIcon(context));
-        avatarView.setVisibility(View.VISIBLE);
-        avatarView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.setComponent(new ComponentName("com.android.settings","com.android.settings.Settings$UserSettingsActivity"));
-                startActivity(intent);
-            }
-        });
-
         getLifecycle().addObserver(new HideNonSystemOverlayMixin(this));
         mCategoryMixin = new CategoryMixin(this);
         getLifecycle().addObserver(mCategoryMixin);
@@ -313,6 +279,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         final String highlightMenuKey = getHighlightMenuKey();
         // Only allow features on high ram devices.
         if (!getSystemService(ActivityManager.class).isLowRamDevice()) {
+            initAvatarView();
             final boolean scrollNeeded = mIsEmbeddingActivityEnabled
                     && !TextUtils.equals(getString(DEFAULT_HIGHLIGHT_MENU_KEY), highlightMenuKey);
             showSuggestionFragment(scrollNeeded);
@@ -504,6 +471,20 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         //}
     //}
     // Homepage redesign end
+
+    private void initAvatarView() {
+        final ImageView avatarView = findViewById(R.id.account_avatar);
+        final ImageView avatarTwoPaneView = findViewById(R.id.account_avatar_two_pane_version);
+        if (AvatarViewMixin.isAvatarSupported(this)) {
+            avatarView.setVisibility(View.VISIBLE);
+            getLifecycle().addObserver(new AvatarViewMixin(this, avatarView));
+
+            if (mIsEmbeddingActivityEnabled) {
+                avatarTwoPaneView.setVisibility(View.VISIBLE);
+                getLifecycle().addObserver(new AvatarViewMixin(this, avatarTwoPaneView));
+            }
+        }
+    }
 
     private void updateHomepageBackground() {
         if (!mIsEmbeddingActivityEnabled) {
@@ -874,13 +855,6 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (avatarView != null) {
-          avatarView.setImageDrawable(getCircularUserIcon(getApplicationContext()));
-        }
-    }
     private String getOwnerName(){
         final UserManager mUserManager = getSystemService(UserManager.class);
         final UserInfo userInfo = com.android.settings.Utils.getExistingUser(mUserManager,
