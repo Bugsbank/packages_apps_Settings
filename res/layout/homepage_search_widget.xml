@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginTop="@dimen/homepage_title_margin_top"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -40,10 +40,9 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="24dp"
-                        android:src="@drawable/ic_homepage_search"
+                        android:src="@drawable/android_version_logo"
                         android:layout_gravity="start|center_vertical"
                         android:layout_centerVertical="true"
-                        android:tint="@color/settings_accent_color"
                         android:clickable="true"/>
 
                     <TextView
@@ -71,8 +70,8 @@
 
                     <ImageView
                         android:id="@+id/avatar_widget_icon"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerVertical="true"
                         android:tint="@color/settings_accent_color"
                         android:layout_gravity="end|center_vertical"

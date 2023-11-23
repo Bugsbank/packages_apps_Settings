@@ -101,7 +101,7 @@
 
     <!-- Homepage -->
     <!-- avatar_length + avatar_margin_top -->
-    <dimen name="homepage_title_margin_top">5dp</dimen>
+    <dimen name="homepage_title_margin_top">89dp</dimen>
     <dimen name="homepage_title_margin_bottom">8dp</dimen>
     <dimen name="homepage_title_margin_horizontal">24dp</dimen>
     <dimen name="homepage_padding_horizontal_two_pane">24dp</dimen>

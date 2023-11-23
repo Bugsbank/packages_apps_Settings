@@ -84,34 +84,10 @@
                 android:animateLayoutChanges="true"/>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+
+</androidx.core.widget.NestedScrollView>
 </com.android.settings.edgeeffect.SpringNestScrollView>
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:touchscreenBlocksFocus="false"
-        android:keyboardNavigationCluster="false">
-        <LinearLayout
-            android:id="@+id/app_bar_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="bottom"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
-
-            <include
-                android:id="@+id/homepage_app_bar_regular_phone_view"
-                layout="@layout/settings_homepage_app_bar_regular_phone_layout"/>
-
-            <include
-                android:id="@+id/homepage_app_bar_two_pane_view"
-                layout="@layout/settings_homepage_app_bar_two_pane_layout"
-                android:visibility="gone"/>
-        </LinearLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-    
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabSearch"
         android:layout_width="wrap_content"
@@ -122,7 +98,7 @@
         android:theme="@style/Theme.CollapsingToolbar.Settings"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_gravity="top|center"
+        android:layout_gravity="top|end"
         style="@style/mtx_text_style_h6"
         app:backgroundTint="@color/settingslib_btn_colored_background_material"
         app:iconTint="@color/settingslib_btn_colored_text_material"
