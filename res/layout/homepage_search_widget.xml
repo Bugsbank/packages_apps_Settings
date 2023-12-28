@@ -47,7 +47,7 @@
 
                     <TextView
                         android:id="@+id/homepage_search_text"
-                        android:textColor="@color/mtx_text_color_secondary"
+                        android:textColor="@color/mtx_text_color_primary"
                         style="@style/mtx_text_style_h6"
                         android:textSize="18sp"
                         android:layout_gravity="start|center_vertical"
