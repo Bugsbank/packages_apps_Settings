@@ -106,7 +106,7 @@ class mtxInfoPreferenceController(context: Context) : AbstractPreferenceControll
         val blurView: View = hwInfoPreference.findViewById(R.id.blurView)
 
         deviceInfoPreference.apply {
-            findViewById<TextView>(R.id.firmware_version).text = "Inugami" + " " + getMatrixxVersion()
+            findViewById<TextView>(R.id.firmware_version).text = "Jorogumo" + " " + getMatrixxVersion()
             findViewById<TextView>(R.id.firmware_build_summary).text = matrixxMaintainer
             findViewById<TextView>(R.id.build_variant_title).text = getMatrixxBuildStatus(releaseType)
         }
