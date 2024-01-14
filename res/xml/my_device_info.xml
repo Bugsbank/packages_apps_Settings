@@ -19,7 +19,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res-auto"
     android:key="my_device_info_pref_screen"
-    android:title="@string/about_ghost_device">
+    android:title="About Device">
 
     <PreferenceCategory
         android:selectable="false"
@@ -36,7 +36,7 @@
     
     <PreferenceCategory
         android:selectable="false"
-        android:title="@string/device_header_info_category_title">
+        android:title="Build Version">
 
         <com.android.settingslib.widget.LayoutPreference
             android:key="my_device_info_header"

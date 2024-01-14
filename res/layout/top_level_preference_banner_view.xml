@@ -28,8 +28,6 @@
             android:scaleType="centerCrop"
             android:gravity="center"
             android:elevation="0dp"
-            android:foreground="#6B000000"
-            android:background="#6B000000"
             android:contentDescription="@null"
             android:orientation="horizontal" />
   

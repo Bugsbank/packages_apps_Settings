@@ -21,12 +21,18 @@
     android:title="@string/firmware_version"
     settings:keywords="@string/keywords_android_version">
 
+    <com.android.settingslib.widget.LayoutPreference
+        android:layout="@layout/preference_banner_view"
+        android:key="top_level_homepage_banner_view"
+        android:order="-180"/>
+
     <!-- Device name -->
     <Preference
         android:key="about_device_name"
         android:title="@string/about_device_name"
         android:summary="@string/summary_placeholder"
         settings:enableCopying="true"
+        settings:layout="@layout/top_level_preference_top_card"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.AboutDeviceNamePreferenceController"/>
 
     <!-- Android version -->
@@ -36,6 +42,7 @@
         android:summary="@string/summary_placeholder"
         settings:enableCopying="true"
         settings:searchable="false"
+        settings:layout="@layout/top_level_preference_middle_card"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionDetailPreferenceController"/>
 
     <!-- Lineage version -->
@@ -44,6 +51,7 @@
         android:title="GhostOS version"
         android:summary="@string/summary_placeholder"
         settings:enableCopying="true"
+        settings:layout="@layout/top_level_preference_middle_card"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.LineageVersionDetailPreferenceController"/>
 
     <!-- GhostOS maintainer  -->
@@ -52,6 +60,7 @@
         android:title="@string/ghost_maintainer_title"
         android:summary="@string/summary_placeholder"
         settings:enableCopying="true"
+        settings:layout="@layout/top_level_preference_middle_card"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.GhostOSMaintainerPreferenceController"/>
 
     <!-- Security patch -->
@@ -59,14 +68,16 @@
         android:key="security_key"
         android:title="@string/security_patch"
         settings:enableCopying="true"
+        settings:layout="@layout/top_level_preference_middle_card"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.SecurityPatchLevelPreferenceController"/>
 
     <!-- Vendor security patch -->
     <Preference
         android:key="vendor_security_key"
         android:title="@*lineageos.platform:string/lineage_vendor_security_patch"
-        android:selectable="false"
+        android:selectable="true"
         settings:enableCopying="true"
+        settings:layout="@layout/top_level_preference_middle_card"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.LineageVendorSecurityPatchLevelPreferenceController"/>
 
     <!-- Mainline module version -->
@@ -84,8 +95,9 @@
         android:key="base_band"
         android:title="@string/baseband_version"
         android:summary="@string/summary_placeholder"
-        android:selectable="false"
+        android:selectable="true"
         settings:enableCopying="true"
+        settings:layout="@layout/top_level_preference_middle_card"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.BasebandVersionPreferenceController"/>
 
     <!-- Kernel -->
@@ -94,6 +106,7 @@
         android:title="@string/kernel_version"
         android:summary="@string/summary_placeholder"
         settings:enableCopying="true"
+        settings:layout="@layout/top_level_preference_middle_card"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.KernelVersionPreferenceController"/>
 
     <!-- Build date -->
@@ -101,17 +114,9 @@
         android:key="os_build_date"
         android:title="@*lineageos.platform:string/build_date"
         android:summary="@string/summary_placeholder"
-        android:selectable="false"
+        android:selectable="true"
         settings:enableCopying="true"
+        settings:layout="@layout/top_level_preference_bottom_card"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.LineageBuildDatePreferenceController"/>
-
-    <!-- Build -->
-    <Preference
-        android:key="os_build_number"
-        android:title="@string/build_number"
-        android:summary="@string/summary_placeholder"
-        android:selectable="false"
-        settings:enableCopying="true"
-        settings:controller="com.android.settings.deviceinfo.firmwareversion.SimpleBuildNumberPreferenceController"/>
 
 </PreferenceScreen>

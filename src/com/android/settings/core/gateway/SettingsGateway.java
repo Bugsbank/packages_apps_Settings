@@ -197,6 +197,9 @@ import com.android.settings.wifi.savedaccesspoints2.SavedAccessPointsWifiSetting
 import com.android.settings.wifi.tether.WifiTetherSettings;
 
 import com.crdroid.settings.crDroidSettingsLayout;
+import com.crdroid.settings.fragments.LockScreen;
+import com.crdroid.settings.fragments.UserInterface;
+import com.crdroid.settings.fragments.QuickSettings;
 import com.crdroid.settings.fragments.ui.SmartPixels;
 
 import com.google.android.settings.security.SecurityHubDashboard;
@@ -390,7 +393,11 @@ public class SettingsGateway {
             RunningServices.class.getName(),
             SmartPixels.class.getName(),
             SecurityHubDashboard.class.getName(),
-            WifiTetherClientManager.class.getName()
+            WifiTetherClientManager.class.getName(),
+            LockScreen.class.getName(),
+            UserInterface.class.getName(),
+            QuickSettings.class.getName()
+
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
@@ -442,5 +449,8 @@ public class SettingsGateway {
             Settings.SmartPixelsActivity.class.getName(),
             Settings.FirmwareVersionActivity.class.getName(),
             Settings.WallpaperSettingsActivity.class.getName(),
+            Settings.PersonalizationsLockscreenActivity.class.getName(),
+            Settings.PersonalizationsToolboxActivity.class.getName(),
+            Settings.PersonalizationsThemesActivity.class.getName()
     };
 }
