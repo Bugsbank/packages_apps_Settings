@@ -26,8 +26,8 @@
     <string name="firmware_name_text">Ghost OS</string>
     <string name="firmware_build_type_title">Build type</string>
     <string name="firmware_build_summary_title">By maintainer</string>
-    <string name="build_is_official_title">#official</string>
-    <string name="build_is_community_title">#official</string>
+    <string name="build_is_official_title">Forged in Hell</string>
+    <string name="build_is_community_title">Forged in Hell</string>
     <string name="maintainer_summary">by %s</string>
     <string name="unknown_maintainer">by someone</string>
     <string name="device_info_platform_version">14 | fourteen | UpsideDownCake</string>
@@ -77,4 +77,14 @@
     <string name="settings_random4">Finders keepers</string>
     <string name="settings_random5">Search settings</string>
     <string name="settings_random6">You can\'t find something that doesn\'t exists!</string>
+
+         <!-- Device Info screen -->
+    <string name="edit_device_name_title">Edit Device Name</string>
+    <string name="edit_text_hint">Enter new device name</string>
+    <string name="build_status">Build Status</string>
+    <string name="hardware_info">Hardware</string>
+    <string name="device_info_battery">Battery</string>
+    <string name="device_info_chipset">Chipset</string>
+    <string name="device_info_resolution">Resolution</string>
+    <string name="device_info_storage">Storage</string>
 </resources>

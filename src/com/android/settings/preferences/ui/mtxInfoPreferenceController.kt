@@ -16,18 +16,23 @@
 
 package com.android.settings.preferences.ui
 
+import android.app.AlertDialog
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.SystemProperties
+import android.provider.Settings
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.view.LayoutInflater
 import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
 import com.android.settings.R
+import com.android.settings.preferences.ui.DeviceInfoUtil
 import com.android.settingslib.core.AbstractPreferenceController
 import com.android.settingslib.DeviceInfoUtils
 import com.android.settingslib.widget.LayoutPreference
@@ -39,118 +44,109 @@ class mtxInfoPreferenceController(context: Context) : AbstractPreferenceControll
 
     private val defaultFallback = mContext.getString(R.string.device_info_default)
 
-    private fun getPropertyOrDefault(propName: String): String {
+    private fun getProp(propName: String): String {
         return SystemProperties.get(propName, defaultFallback)
+    }
+
+    private fun getProp(propName: String, customFallback: String): String {
+        val propValue = SystemProperties.get(propName)
+        return if (propValue.isNotEmpty()) propValue else SystemProperties.get(customFallback, "Unknown")
+    }
+
+    private fun getRisingChipset(): String {
+        return getProp(PROP_RISING_CHIPSET, "ro.board.platform")
     }
 
     private fun getDeviceName(): String {
         return "${Build.MANUFACTURER} ${Build.MODEL}"
     }
 
-    private fun getMatrixxBuildVersion(): String {
-        return getPropertyOrDefault(PROP_MATRIXX_BUILD_VERSION)
+    private fun getRisingBuildVersion(): String {
+        return getProp(PROP_RISING_BUILD_VERSION)
     }
 
-    private fun getMatrixxChipset(): String {
-        return getPropertyOrDefault(PROP_MATRIXX_CHIPSET)
+    private fun getRisingSecurity(): String {
+        return getProp(PROP_RISING_SECURITY)
     }
 
-    private fun getMatrixxBattery(): String {
-        return getPropertyOrDefault(PROP_MATRIXX_BATTERY)
-    }
-    
-    private fun getMatrixxResolution(): String {
-        return getPropertyOrDefault(PROP_MATRIXX_DISPLAY)
+    private fun getRisingVersion(): String {
+        return SystemProperties.get(PROP_RISING_VERSION, "2.0")
     }
 
-    private fun getMatrixxSecurity(): String {
-        return getPropertyOrDefault(PROP_MATRIXX_SECURITY)
-    }
-
-    private fun getMatrixxVersion(): String {
-        return SystemProperties.get(PROP_MATRIXX_VERSION)
-    }
-
-    private fun getMatrixxReleaseType(): String {
-        val releaseType = getPropertyOrDefault(PROP_MATRIXX_RELEASETYPE)
-        return releaseType.substring(0, 1).uppercase() +
-               releaseType.substring(1).lowercase()
-    }
-
-    private fun getMatrixxBuildStatus(releaseType: String): String {
+    private fun getRisingBuildStatus(releaseType: String): String {
         return mContext.getString(if (releaseType == "official") R.string.build_is_official_title else R.string.build_is_community_title)
     }
 
-    private fun getMatrixxMaintainer(releaseType: String): String {
-        val matrixxMaintainer = getPropertyOrDefault(PROP_MATRIXX_MAINTAINER)
-        if (matrixxMaintainer.equals("Unknown", ignoreCase = true)) {
+    private fun getRisingMaintainer(releaseType: String): String {
+        val risingMaintainer = getProp(PROP_RISING_MAINTAINER)
+        if (risingMaintainer.equals("Unknown", ignoreCase = true)) {
             return mContext.getString(R.string.unknown_maintainer)
         }
-        return mContext.getString(R.string.maintainer_summary, matrixxMaintainer)
+        return mContext.getString(R.string.maintainer_summary, risingMaintainer)
     }
 
     override fun displayPreference(screen: PreferenceScreen) {
         super.displayPreference(screen)
 
-        val releaseType = getPropertyOrDefault(PROP_MATRIXX_RELEASETYPE).lowercase()
-        val matrixxMaintainer = getMatrixxMaintainer(releaseType)
+        val releaseType = getProp(PROP_RISING_RELEASETYPE).lowercase()
+        val codeName = getProp(PROP_RISING_CODE).lowercase()
+        val risingMaintainer = getRisingMaintainer(releaseType)
         val isOfficial = releaseType == "official"
         
         val hwInfoPreference = screen.findPreference<LayoutPreference>(KEY_HW_INFO)!!
-        val swInfoPreference = screen.findPreference<LayoutPreference>(KEY_SW_INFO)!!
-        val sw2InfoPreference = screen.findPreference<LayoutPreference>(KEY_SW2_INFO)!!
-        val deviceInfoPreference = screen.findPreference<LayoutPreference>(KEY_DEVICE_INFO)!!
-        val aboutHwInfoView: View = hwInfoPreference.findViewById(R.id.about_device_hardware)
-        val hwInfoView: View = hwInfoPreference.findViewById(R.id.device_hardware)
-        val phoneImage: View = hwInfoPreference.findViewById(R.id.phone_image_container)
-        val blurView: View = hwInfoPreference.findViewById(R.id.blurView)
+        val swInfoPreference = screen.findPreference<LayoutPreference>(KEY_DEVICE_INFO)!!
+        val statusPreference = screen.findPreference<Preference>(KEY_BUILD_STATUS)!!
+        val deviceText = swInfoPreference.findViewById<TextView>(R.id.device_name_model)
+        val editBtn = swInfoPreference.findViewById<TextView>(R.id.edit_device_name_model)
 
-        deviceInfoPreference.apply {
-            findViewById<TextView>(R.id.firmware_version).text = "Jorogumo" + " " + getMatrixxVersion()
-            findViewById<TextView>(R.id.firmware_build_summary).text = matrixxMaintainer
-            findViewById<TextView>(R.id.build_variant_title).text = getMatrixxBuildStatus(releaseType)
+        statusPreference.setTitle(getRisingBuildStatus(releaseType))
+        statusPreference.setSummary(risingMaintainer)
+        statusPreference.setIcon(if (isOfficial) R.drawable.verified else R.drawable.unverified)
+
+        val settingsDeviceName = Settings.Global.getString(
+            mContext.contentResolver,
+            Settings.Global.DEVICE_NAME
+        )
+
+        if (!settingsDeviceName.isNullOrBlank()) {
+            deviceText.text = settingsDeviceName
+        }
+
+        editBtn.setOnClickListener {
+            showEditDialog(deviceText)
         }
 
         hwInfoPreference.apply {
-            findViewById<TextView>(R.id.device_name).text = getDeviceName()
-            findViewById<TextView>(R.id.device_chipset).text = getMatrixxChipset()
-            findViewById<TextView>(R.id.device_battery_capacity).text = getMatrixxBattery()
-            findViewById<TextView>(R.id.device_resolution).text = getMatrixxResolution()
-            findViewById<TextView>(R.id.device_name_model).text = getDeviceName()
+            findViewById<TextView>(R.id.device_chipset).text = getRisingChipset()
+            findViewById<TextView>(R.id.device_storage).text = DeviceInfoUtil.getTotalRam() + " | " + DeviceInfoUtil.getStorageTotal(mContext)
+            findViewById<TextView>(R.id.device_battery_capacity).text = DeviceInfoUtil.getBatteryCapacity(mContext)
+            findViewById<TextView>(R.id.device_resolution).text = DeviceInfoUtil.getScreenResolution(mContext)
         }
+    }
 
-        aboutHwInfoView.setOnClickListener {
-            if (hwInfoView.visibility == View.VISIBLE) {
-                hwInfoView.visibility = View.GONE
-                blurView.visibility = View.GONE
-                phoneImage.visibility = View.VISIBLE
-            } else {
-                hwInfoView.visibility = View.VISIBLE
-                blurView.visibility = View.VISIBLE
-                phoneImage.visibility = View.GONE
+    private fun showEditDialog(tv: TextView) {
+        val layoutInflater = LayoutInflater.from(mContext)
+        val promptView = layoutInflater.inflate(R.layout.edit_text_dialog, null)
+        val editText = promptView.findViewById<EditText>(R.id.editText)
+        val currentDeviceName = Settings.Global.getString(
+            mContext.contentResolver,
+            Settings.Global.DEVICE_NAME
+        )
+        editText.hint = currentDeviceName
+        AlertDialog.Builder(mContext)
+            .setTitle(R.string.edit_device_name_title)
+            .setView(promptView)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val deviceName = editText.text.toString().trim()
+                Settings.Global.putString(
+                    mContext.contentResolver,
+                    Settings.Global.DEVICE_NAME,
+                    deviceName
+                )
+                tv.text = deviceName
             }
-        }
-
-        swInfoPreference.apply {
-            findViewById<TextView>(R.id.android_version_summary).text = mContext.getString(R.string.device_info_platform_version)
-        }
-        
-        sw2InfoPreference.apply {
-            findViewById<TextView>(R.id.security_patch_summary).text = getMatrixxSecurity()
-            findViewById<TextView>(R.id.kernel_info_summary).text = DeviceInfoUtils.getFormattedKernelVersion(mContext)
-        }
-
-        val clickMap = mapOf(
-            R.id.android_version_details to Intent().setComponent(ComponentName("com.android.settings", "com.android.settings.Settings\$FirmwareVersionActivity"))
-           // R.id.chipset_info to Intent().setComponent(ComponentName("com.android.settings", "com.android.settings.Settings\$DevRunningServicesActivity")),
-          //  R.id.display_info to Intent().setComponent(ComponentName("com.android.settings", "com.android.settings.Settings\$DisplaySettingsActivity")),
-       )
-
-        clickMap.forEach { (id, intent) ->
-            swInfoPreference.findViewById<View>(id)?.setOnClickListener {
-                mContext.startActivity(intent)
-            }
-       }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     override fun isAvailable(): Boolean {
@@ -163,23 +159,15 @@ class mtxInfoPreferenceController(context: Context) : AbstractPreferenceControll
 
     companion object {
         private const val KEY_HW_INFO = "my_device_hw_header"
-        private const val KEY_SW_INFO = "my_device_sw_header"
-        private const val KEY_SW2_INFO = "my_device_sw2_header"
         private const val KEY_DEVICE_INFO = "my_device_info_header"
-        
-        private const val KEY_CHIPSET = "device_chipset"
-        private const val KEY_BATTERY = "device_battery_capacity"
-        private const val KEY_DISPLAY = "device_resolution"
+        private const val KEY_BUILD_STATUS = "rom_build_status"
 
-        private const val PROP_MATRIXX_VERSION = "ro.matrixx.modversion"
-        private const val PROP_MATRIXX_RELEASETYPE = "ro.matrixx.release.type"
-        private const val PROP_MATRIXX_MAINTAINER = "ro.matrixx.maintainer"
-        private const val PROP_MATRIXX_DEVICE = "ro.matrixx.device"
-        private const val PROP_MATRIXX_BUILD_TYPE = "ro.matrixx.build.variant"
-        private const val PROP_MATRIXX_BUILD_VERSION = "ro.matrixx.version"
-        private const val PROP_MATRIXX_CHIPSET = "ro.matrixx.chipset"
-        private const val PROP_MATRIXX_BATTERY = "ro.matrixx.battery"
-        private const val PROP_MATRIXX_DISPLAY = "ro.matrixx.display_resolution"
-        private const val PROP_MATRIXX_SECURITY = "ro.build.version.security_patch"
+        private const val PROP_RISING_CODE = "ro.rising.code"
+        private const val PROP_RISING_VERSION = "ro.rising.version"
+        private const val PROP_RISING_RELEASETYPE = "ro.rising.releasetype"
+        private const val PROP_RISING_MAINTAINER = "ro.rising.maintainer"
+        private const val PROP_RISING_BUILD_VERSION = "ro.rising.build.version"
+        private const val PROP_RISING_CHIPSET = "ro.rising.chipset"
+        private const val PROP_RISING_SECURITY = "ro.build.version.security_patch"
     }
 }
