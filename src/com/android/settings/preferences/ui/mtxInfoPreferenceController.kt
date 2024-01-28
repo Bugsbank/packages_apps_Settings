@@ -61,6 +61,10 @@ class mtxInfoPreferenceController(context: Context) : AbstractPreferenceControll
         return "${Build.MANUFACTURER} ${Build.MODEL}"
     }
 
+    private fun getMatrixxSecurity(): String {
+        return getProp(PROP_MATRIXX_SECURITY)
+    }
+
     private fun getRisingBuildVersion(): String {
         return getProp(PROP_RISING_BUILD_VERSION)
     }
@@ -95,6 +99,7 @@ class mtxInfoPreferenceController(context: Context) : AbstractPreferenceControll
         
         val hwInfoPreference = screen.findPreference<LayoutPreference>(KEY_HW_INFO)!!
         val swInfoPreference = screen.findPreference<LayoutPreference>(KEY_DEVICE_INFO)!!
+        val sw2InfoPreference = screen.findPreference<LayoutPreference>(KEY_SW2_INFO)!!
         val statusPreference = screen.findPreference<Preference>(KEY_BUILD_STATUS)!!
         val deviceText = swInfoPreference.findViewById<TextView>(R.id.device_name_model)
         val editBtn = swInfoPreference.findViewById<TextView>(R.id.edit_device_name_model)
@@ -114,6 +119,11 @@ class mtxInfoPreferenceController(context: Context) : AbstractPreferenceControll
 
         editBtn.setOnClickListener {
             showEditDialog(deviceText)
+        }
+
+        sw2InfoPreference.apply {
+            findViewById<TextView>(R.id.security_patch_summary).text = getMatrixxSecurity()
+            findViewById<TextView>(R.id.kernel_info_summary).text = DeviceInfoUtils.getFormattedKernelVersion(mContext)
         }
 
         hwInfoPreference.apply {
@@ -159,6 +169,7 @@ class mtxInfoPreferenceController(context: Context) : AbstractPreferenceControll
 
     companion object {
         private const val KEY_HW_INFO = "my_device_hw_header"
+        private const val KEY_SW2_INFO = "my_device_sw2_header"
         private const val KEY_DEVICE_INFO = "my_device_info_header"
         private const val KEY_BUILD_STATUS = "rom_build_status"
 
@@ -168,6 +179,7 @@ class mtxInfoPreferenceController(context: Context) : AbstractPreferenceControll
         private const val PROP_RISING_MAINTAINER = "ro.rising.maintainer"
         private const val PROP_RISING_BUILD_VERSION = "ro.rising.build.version"
         private const val PROP_RISING_CHIPSET = "ro.rising.chipset"
+        private const val PROP_MATRIXX_SECURITY = "ro.build.version.security_patch"
         private const val PROP_RISING_SECURITY = "ro.build.version.security_patch"
     }
 }

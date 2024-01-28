@@ -29,8 +29,15 @@
             settings:isPreferenceVisible="true"/>
 
         <com.android.settingslib.widget.LayoutPreference
-            android:key="my_device_hw_header"
+            android:key="my_device_sw2_header"
             android:order="-998"
+            android:layout="@layout/about_device_info_sw2"
+            android:selectable="false"
+            settings:isPreferenceVisible="true"/>
+
+        <com.android.settingslib.widget.LayoutPreference
+            android:key="my_device_hw_header"
+            android:order="-997"
             android:layout="@layout/about_device_info_hw"
             android:selectable="false"
             settings:isPreferenceVisible="true"/>
@@ -42,7 +49,7 @@
         <Preference
             android:key="rom_build_status"
             settings:layout="@layout/rising_card_build_status"
-            android:order="-997"
+            android:order="-996"
             settings:enableCopying="true"
             android:selectable="true"/>
 
