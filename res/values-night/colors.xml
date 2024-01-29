@@ -77,6 +77,9 @@
     
     <color name="op_control_text_color_primary">#ffffffff</color>
     <color name="op_control_text_color_secondary">#89ffffff</color>
+    <color name="op_control_text_color_primary_inverse">#000000</color>
+    <color name="op_control_text_color_primary_inverse_translucent">#E0000000</color>
+    <color name="op_control_text_color_primary_translucent">#E0FFFFFF</color>
     <color name="oneplus_accent_text_color">#fff0648a</color>
     <color name="op_control_contextual_card_solid_color">#ff1c1e20</color>
     <color name="op_control_accent_color_green">@color/op_control_accent_color_green_dark</color>
@@ -84,5 +87,13 @@
     <color name="oneplus_accent_color">@color/settingsHeaderColor</color>
     <color name="settings_accent_color">@color/oneplus_accent_color</color>
     <color name="settingsHeaderColor">@*android:color/accent_device_default_dark</color>
+
+    <color name="dot_shapeColor">@*android:color/system_accent1_100</color>
+    <color name="dot_colorAboutUI">@*android:color/system_neutral1_800</color>
+
+     <!-- Settings Homepage Stupidity -->
+    <color name="wave_homepage_icon_background">@*android:color/system_neutral1_900</color>
+    <color name="rui_divider_bg">@*android:color/system_accent1_100</color>
+    <color name="rui_icon">#ff202124</color>
 </resources>
 

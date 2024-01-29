@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="98dp"
+    android:layout_marginStart="@dimen/card_margin_start_aqua"
+    android:layout_marginEnd="@dimen/card_margin_end_aqua"
+    android:layout_marginBottom="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="32dp">
+      
+        <com.rice.utils.bannerHeaderView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:gravity="center"
+            android:elevation="0dp"
+            android:foreground="#6B000000"
+            android:background="#6B000000"
+            android:contentDescription="@null"
+            android:orientation="horizontal" />
+  
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <TextView
+                android:ellipsize="marquee"
+                android:id="@android:id/summary"
+                android:fadingEdge="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="#d3FFFFFF"
+                android:textSize="23sp"
+                style="@style/op_control_text_style_h6" />
+
+            <TextView
+                android:id="@android:id/title"
+                style="@style/op_control_text_style_body1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textColor="@color/op_control_text_color_secondary" />
+
+
+        <FrameLayout
+            android:id="@id/icon_frame"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+
+            <androidx.preference.internal.PreferenceImageView
+                android:id="@android:id/icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:maxHeight="52.5dp"
+                app:maxWidth="52.5dp" />
+
+        </FrameLayout>
+    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

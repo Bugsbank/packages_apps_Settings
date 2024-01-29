@@ -72,6 +72,7 @@ import com.android.settingslib.drawable.CircleFramedDrawable;
 import com.android.settingslib.drawer.Tile;
 import com.android.settingslib.search.SearchIndexable;
 import com.android.settingslib.widget.LayoutPreference;
+import com.android.settings.widget.EntityHeaderController;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -86,6 +87,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     private static final String TAG = "TopLevelSettings";
     private static final String SAVED_HIGHLIGHT_MIXIN = "highlight_mixin";
     private static final String PREF_KEY_SUPPORT = "top_level_support";
+    private int mDashBoardStyle;
 
     private boolean mIsEmbeddingActivityEnabled;
     private TopLevelHighlightMixin mHighlightMixin;
@@ -113,7 +115,24 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     protected int getPreferenceScreenResId() {
-        return R.xml.top_level_settings;
+        switch (mDashBoardStyle) {
+            case 0:
+                return R.xml.top_level_settings;
+            case 2:
+                return R.xml.top_level_settings_cos;
+            case 2:
+                return R.xml.top_level_settings_oos;
+            case 3:
+                return R.xml.top_level_settings_arc;
+            case 4:
+                return R.xml.top_level_settings_aosp;
+            case 5:
+                return R.xml.top_level_settings_mt;
+            case 6:
+                return R.xml.top_level_settings_card;
+            default:
+                return R.xml.top_level_settings;
+         }
     }
 
     @Override
@@ -138,6 +157,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
         super.onAttach(context);
         HighlightableMenu.fromXml(context, getPreferenceScreenResId());
         use(SupportPreferenceController.class).setActivity(getActivity());
+        setDashboardStyle(context);
     }
 
     @Override
@@ -412,6 +432,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
                     /* scrollNeeded= */ false);
         }
         super.onStart();
+        onUserCard();
         RecyclerView recyclerView = getListView();
         if (recyclerView != null) {
             recyclerView.post(new Runnable() {
@@ -463,8 +484,10 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
         int tintColor = Utils.getHomepageIconColor(getContext());
         iteratePreferences(preference -> {
             Drawable icon = preference.getIcon();
-            if (icon != null) {
-                icon.setTint(tintColor);
+            if (mDashBoardStyle == 4 || mDashBoardStyle == 6) {
+                if (icon != null) {
+                    icon.setTint(tintColor);
+                }
             }
             String preferenceKey = preference.getKey();
             if (preferenceKey != null && !("top_level_homepage_widgets".equals(preferenceKey) ||
@@ -480,6 +503,8 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
         //Log.d("PreferenceLogging", "Setting up layout for preference key: " + key);
 
+    switch (mDashBoardStyle) {
+            case 0:
         Set<String> topPreferences = new HashSet<>(Arrays.asList(
                 "top_level_network", 
                 "top_level_system", 
@@ -528,6 +553,259 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
             preference.setOrder(order);
             preference.setLayoutResource(R.layout.top_level_preference_solo_card);
         }
+        break;
+    case 1:
+        Set<String> topPreferences = new HashSet<>(Arrays.asList(
+                "top_level_network", 
+                "top_level_system", 
+                "top_level_apps",
+                "top_level_accessibility",
+                "top_level_emergency",
+                "top_level_display"
+        ));
+
+        Set<String> middlePreferences = new HashSet<>(Arrays.asList(
+                "top_level_battery", 
+                "top_level_security",
+                "top_level_privacy", 
+                "top_level_storage", 
+                "top_level_notifications",
+                "top_level_communal",
+                "top_level_safety_center"
+        ));
+
+        Set<String> bottomPreferences = new HashSet<>(Arrays.asList(
+                "top_level_connected_devices",
+                "top_level_sound",
+                "top_level_wallpaper",
+                "top_level_location",
+                "top_level_accounts", 
+                "top_level_about_device"
+        ));
+
+        if ("top_level_wellbeing".equals(key)) {
+            preference.setLayoutResource(R.layout.top_level_preference_wellbeing);
+        } else if ("top_level_google".equals(key)) {
+            preference.setLayoutResource(R.layout.top_level_preference_google);
+            googleServicesAvailable = true;
+        } else if (topPreferences.contains(key)) {
+            preference.setLayoutResource(R.layout.top_level_preference_top);
+        } else if (middlePreferences.contains(key)) {
+            preference.setLayoutResource(R.layout.top_level_preference_middle);
+        } else if (key.equals("top_level_accounts") && googleServicesAvailable) {
+            preference.setLayoutResource(R.layout.top_level_preference_middle);
+        } else if (bottomPreferences.contains(key)) {
+            preference.setLayoutResource(R.layout.top_level_preference_bottom);
+        } else {
+            // highlight injected top level preference e.g OEM parts
+            int order = extraPreferenceOrder - 1;
+            extraPreferenceOrder = order;
+            preference.setOrder(order);
+            preference.setLayoutResource(R.layout.top_level_preference_solo_card);
+        }
+        break;
+    case 2:
+            Set<String> topPreferences = new HashSet<>(Arrays.asList(
+                    "top_level_network", 
+                    "top_level_system", 
+                    "top_level_apps",
+                    "top_level_accessibility",
+                    "top_level_emergency",
+                    "top_level_display"
+            ));
+    
+            Set<String> middlePreferences = new HashSet<>(Arrays.asList(
+                    "top_level_battery", 
+                    "top_level_security",
+                    "top_level_privacy", 
+                    "top_level_storage", 
+                    "top_level_notifications",
+                    "top_level_communal",
+                    "top_level_safety_center"
+            ));
+    
+            Set<String> bottomPreferences = new HashSet<>(Arrays.asList(
+                    "top_level_connected_devices",
+                    "top_level_sound",
+                    "top_level_wallpaper",
+                    "top_level_location",
+                    "top_level_accounts", 
+                    "top_level_about_device"
+            ));
+    
+            if ("top_level_wellbeing".equals(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_wellbeing_oos);
+            } else if ("top_level_google".equals(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_google_oos);
+                googleServicesAvailable = true;
+            } else if (topPreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_oos_top);
+            } else if (middlePreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_oos_middle);
+            } else if (key.equals("top_level_accounts") && googleServicesAvailable) {
+                preference.setLayoutResource(R.layout.top_level_preference_oos_middle);
+            } else if (bottomPreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_bottom);
+            } else {
+                // highlight injected top level preference e.g OEM parts
+                int order = extraPreferenceOrder - 1;
+                extraPreferenceOrder = order;
+                preference.setOrder(order);
+                preference.setLayoutResource(R.layout.top_level_preference_solo_card);
+            }
+        break;
+    case 3:
+            Set<String> topPreferences = new HashSet<>(Arrays.asList(
+                    "top_level_network", 
+                    "top_level_system", 
+                    "top_level_apps",
+                    "top_level_accessibility",
+                    "top_level_emergency",
+                    "top_level_display"
+            ));
+    
+            Set<String> middlePreferences = new HashSet<>(Arrays.asList(
+                    "top_level_battery", 
+                    "top_level_security",
+                    "top_level_privacy", 
+                    "top_level_storage", 
+                    "top_level_notifications",
+                    "top_level_communal",
+                    "top_level_safety_center"
+            ));
+    
+            Set<String> bottomPreferences = new HashSet<>(Arrays.asList(
+                    "top_level_connected_devices",
+                    "top_level_sound",
+                    "top_level_wallpaper",
+                    "top_level_location",
+                    "top_level_accounts", 
+                    "top_level_about_device"
+            ));
+    
+            if ("top_level_wellbeing".equals(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_wellbeing_arc);
+            } else if ("top_level_google".equals(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_google_arc);
+                googleServicesAvailable = true;
+            } else if (topPreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_arc);
+            } else if (middlePreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_arc);
+            } else if (key.equals("top_level_accounts") && googleServicesAvailable) {
+                preference.setLayoutResource(R.layout.top_level_preference_arc);
+            } else if (bottomPreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_arc);
+            } else {
+                // highlight injected top level preference e.g OEM parts
+                int order = extraPreferenceOrder - 1;
+                extraPreferenceOrder = order;
+                preference.setOrder(order);
+                preference.setLayoutResource(R.layout.top_level_preference_solo_card);
+            }
+        break;
+	case 3:
+            // do nothing
+        break;
+    case 5:
+            Set<String> topPreferences = new HashSet<>(Arrays.asList(
+                    "top_level_network", 
+                    "top_level_system", 
+                    "top_level_apps",
+                    "top_level_accessibility",
+                    "top_level_emergency",
+                    "top_level_display"
+            ));
+    
+            Set<String> middlePreferences = new HashSet<>(Arrays.asList(
+                    "top_level_battery", 
+                    "top_level_security",
+                    "top_level_privacy", 
+                    "top_level_storage", 
+                    "top_level_notifications",
+                    "top_level_communal",
+                    "top_level_safety_center"
+            ));
+    
+            Set<String> bottomPreferences = new HashSet<>(Arrays.asList(
+                    "top_level_connected_devices",
+                    "top_level_sound",
+                    "top_level_wallpaper",
+                    "top_level_location",
+                    "top_level_accounts", 
+                    "top_level_about_device"
+            ));
+    
+            if ("top_level_wellbeing".equals(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_wellbeing_mt);
+            } else if ("top_level_google".equals(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_google_mt);
+                googleServicesAvailable = true;
+            } else if (topPreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_mt_top);
+            } else if (middlePreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_mt_middle);
+            } else if (key.equals("top_level_accounts") && googleServicesAvailable) {
+                preference.setLayoutResource(R.layout.top_level_preference_mt_middle);
+            } else if (bottomPreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_mt_bottom);
+            } else {
+                // highlight injected top level preference e.g OEM parts
+                int order = extraPreferenceOrder - 1;
+                extraPreferenceOrder = order;
+                preference.setOrder(order);
+                preference.setLayoutResource(R.layout.top_level_preference_solo_card);
+            }
+            break;
+    case 5:
+            Set<String> topPreferences = new HashSet<>(Arrays.asList(
+                    "top_level_network", 
+                    "top_level_system", 
+                    "top_level_apps",
+                    "top_level_accessibility",
+                    "top_level_emergency",
+                    "top_level_display"
+            ));
+    
+            Set<String> middlePreferences = new HashSet<>(Arrays.asList(
+                    "top_level_battery", 
+                    "top_level_security",
+                    "top_level_privacy", 
+                    "top_level_storage", 
+                    "top_level_notifications",
+                    "top_level_communal",
+                    "top_level_safety_center"
+            ));
+    
+            Set<String> bottomPreferences = new HashSet<>(Arrays.asList(
+                    "top_level_connected_devices",
+                    "top_level_sound",
+                    "top_level_wallpaper",
+                    "top_level_location",
+                    "top_level_accounts", 
+                    "top_level_about_device"
+            ));
+    
+            if ("top_level_wellbeing".equals(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_wellbeing_card_ng);
+            } else if ("top_level_google".equals(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_google_card_ng);
+                googleServicesAvailable = true;
+            } else if (topPreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_top_card_ng);
+            } else if (middlePreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_middle_card_ng);
+            } else if (key.equals("top_level_accounts") && googleServicesAvailable) {
+                preference.setLayoutResource(R.layout.top_level_preference_middle_card_ng);
+            } else if (bottomPreferences.contains(key)) {
+                preference.setLayoutResource(R.layout.top_level_preference_bottom_card_ng);
+            } else {
+                // highlight injected top level preference e.g OEM parts
+                int order = extraPreferenceOrder - 1;
+                extraPreferenceOrder = order;
+                preference.setOrder(order);
+                preference.setLayoutResource(R.layout.top_level_preference_solo_card);
+            }
     }
 
     @Override
@@ -697,4 +975,8 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
                     return false;
                 }
             };
+    private void setDashboardStyle(Context context) {
+        mDashBoardStyle = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.SETTINGS_DASHBOARD_STYLE, 0, UserHandle.USER_CURRENT);
+    }
 }
